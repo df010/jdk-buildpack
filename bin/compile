@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+#The script is run with two arguments: the build directory for the app and the cache directory, which is a location the buildpack can use to store assets during the build process. During the execution of the compile script, all output sent to STDOUT is relayed through the cf CLI to the 
+
+set -e            # fail fast
+set -o pipefail   # dont ignore exit codes when piping output
+# set -x          # enable debugging
+
+build_dir=$1
+cache_dir=$2
+
+echo `dirname $0`
+[[ `ls -1 $build_dir|wc -l` -eq 1 ]] && mv $build_dir/*/* $build_dir/
+cp $(dirname $0)/boot.sh  $build_dir/
+#find $build_dir
+tar -xzf $(dirname $0)/../vendor/jdk-7u80-linux-x64.tar.gz -C $build_dir
+find $build_dir -maxdepth 1 -type d -iname "jdk*"|xargs -i mv {} $build_dir/.jdk

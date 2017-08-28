@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# bin/detect <build-dir>
+# build-dir contains the app that deployed with cf push 
+
+if [[ -f $1/bin/start.sh || `ls -1|wc -l` -eq  1 && -f $1/`ls -1 $1`/bin/start.sh ]]; then
+  echo "jdk application" && exit 0
+else 
+  echo "no" && exit 1
+fi
