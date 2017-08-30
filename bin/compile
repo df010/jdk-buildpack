@@ -9,7 +9,7 @@ set -o pipefail   # dont ignore exit codes when piping output
 build_dir=$1
 cache_dir=$2
 
-bpdir=$(readlink -f $(dirname $(dirname $0)))
+bpdir=$(readlink -f $(dirname $(cd $(dirname $0); pwd)))
 echo $bpdir
 [[ `ls -1 $build_dir|wc -l` -eq 1 ]] && mv $build_dir/*/* $build_dir/
 cp ${bpdir}/bin/boot.sh  $build_dir/
