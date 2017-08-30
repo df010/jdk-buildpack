@@ -11,7 +11,7 @@ cache_dir=$2
 
 bpdir=$(readlink -f $(dirname $(cd $(dirname $0); pwd)))
 echo $bpdir
-[[ `ls -1 $build_dir|wc -l` -eq 1 ]] && mv $build_dir/*/* $build_dir/
+[[ `ls -1 $build_dir|wc -l` -eq 1 ]] && [ ! -d $build_dir/bin ] && mv $build_dir/*/* $build_dir/
 cp ${bpdir}/bin/boot.sh  $build_dir/
 tar -xzf ${bpdir}/vendor/jdk-7u80-linux-x64.tar.gz -C $build_dir
 find $build_dir -maxdepth 1 -type d -iname "jdk*"|head -n 1|xargs -i mv {} $build_dir/.jdk
